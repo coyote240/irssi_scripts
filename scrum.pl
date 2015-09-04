@@ -23,7 +23,6 @@ Irssi::command_bind scrum => sub {
     my ($data, $server, $witem) = @_;
     my $filename = strftime "%Y-%m-%d.txt", localtime;
 
-    print %ENV;
     if(!defined $ENV{SCRUM_DIR}) {
         die "Environment variable SCRUM_DIR not set."
     }
@@ -31,8 +30,8 @@ Irssi::command_bind scrum => sub {
     open FILE, $ENV{SCRUM_DIR} . $filename or die $!;
     while(my $info = <FILE>) {
         chomp $info;
-        $witem->print("#info " . $info, MSGLEVEL_PUBLIC);
+        $witem->command("say " . "#info " . $info);
     }
     close(FILE);
-    $witem->print("EOS", MSGLEVEL_PUBLIC);
+    $witem->command("say " . "EOS");
 };
